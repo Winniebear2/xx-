@@ -1,5 +1,7 @@
 #include<__msvc_all_public_headers.hpp>
 using namespace std;	
+void ShowMenu();
+void wait();
 class Classroom {
 public:
 	char room_name[200];
@@ -29,7 +31,7 @@ Application::Application(char* instu_name, char* indate, char* inexe_name, char*
 
 void Application::WriteData() {
 	ofstream file;
-	file.open("F://Applications.txt", ios::binary | ios::app);
+	file.open("E://Applications.txt", ios::binary | ios::app);
 	try {
 		file.write(student_name, 200);
 		file.write(application_date, 200);
@@ -55,8 +57,11 @@ void wait() {
 	cout << endl;
 	cout << "返回主菜单：1    退出：0        继续：输入其他任意数字  "<<endl;
 	cin >> judge;
-	if (judge == 1)
-		Welcome();
+	if (judge == 1) {
+        system("cls");
+		ShowMenu();
+	}
+		
 	else if (judge == 0)
 		exit(0);
 }
@@ -90,7 +95,7 @@ void ViewData(int selpage = 1) {
 	int filelength;
 	curpage = selpage;
 	ifstream file;
-	file.open("F://Applications.txt", ios::binary);
+	file.open("E://Applications.txt", ios::binary);
 	filelength = GetFileLength(file);
 	datacount = filelength / (1000);
 	if (datacount >= 1)index = true;
@@ -147,21 +152,45 @@ void ViewData(int selpage = 1) {
 	}
 	else WaitView(curpage);
 	file.close();
+	system("pause");
 }
 
-	void ShowMenu() 
-	{
-	cout << endl;
-	cout << "开始你的操作：" << endl;
-	cout << endl;
-	cout << "1、申请空教室" << endl;
-	cout << endl;
-	cout << "2、查看申请目录" << endl;
-	cout << endl;
-	cout << "3、查看可申请空教室目录" << endl;
-	cout << endl;
+void kjs() {
+	system("cls");
+	string s01 = "", s02 = "A1", s03 = "A2", s04 = "B1";
+	string s1= "01", s2 = "02", s3 = "03", s4 = "04", s5= "05", s6 = "06";
+	string s7 = "07", s8 = "08", s9 = "09", s10 = "10";
+	for (int i = 1; i < 31; i++) {
+		if (i < 11)
+			s01 += s02;
+		else if (i < 21)
+			s01 += s03;
+		else
+			s01 += s04;
+		switch(i % 10) {
+			case 9:s01 += s9; break;
+			case 8:s01 += s8; break;
+			case 7:s01 += s7; break;
+			case 6:s01 += s6; break;
+			case 5:s01 += s5; break;
+			case 4:s01 += s4; break;
+			case 3:s01 += s3; break;
+			case 2:s01 += s2; break;
+			case 1:s01 += s1; break;
+			case 0:s01 += s10; break;
+		}
+		
+	}
+	for (int i = 0; i < s01.length();i+= 4) {
+		cout << s01.substr(i, 4) << endl;
+		
+	}
+	wait();
 }
+
+
 void applicate_room() {
+	system("cls");
 	char instu_name[50], indate[20], inexe_name[50], inroom_name[50];
 	int instatus;
 	cout << "请输入申请人姓名:" << endl;
@@ -180,13 +209,36 @@ void applicate_room() {
 	system("pause");
 	
 }
-void main() {
-    
+
+
+void ShowMenu() {
 	Welcome();
+	int a;
+	cout << endl;
+	cout << "开始你的操作：" << endl;
+	cout << endl;
+	cout << "1、申请空教室" << endl;
+	cout << endl;
+	cout << "2、查看申请目录" << endl;
+	cout << endl;
+	cout << "3、查看可申请空教室目录" << endl;
+	cout << endl;
+	cin >> a;
+	switch (a /1) {
+	case 3:kjs(); break;
+	case 2:ViewData(); break;
+	case 1:applicate_room(); break;
+	}
+
+}
+
+
+void admin() {
+	cout << "查看教室" << endl;
+	kjs();
+}
+
+
+void main() {
 	ShowMenu();
-	applicate_room();
-	ViewData();
-    
-	
-	
 }
